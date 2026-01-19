@@ -1,45 +1,93 @@
-import { Link } from "react-router-dom";
+import { useContext, useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
+import type UsuarioLogin from "../../models/UsuarioLogin";
+import { AuthContext } from "../../contexts/AuthContextProps";
 
 function Login() {
+
+    //para navegação manipulada
+    const navigate = useNavigate();
+
+    // aqui eu estou pegando as inforamações que ficaram armazenadas no context
+    const { usuario, handleLogin, isLoading } = useContext(AuthContext)
+
+    // ele que recebe os dados do login, vindo do form
+    const [usuarioLogin, setUsuarioLogin] = useState<UsuarioLogin>(
+        //quer dizer que possui todos os campos do usuario login, nao precisa inicializar novamente
+        {} as UsuarioLogin
+    )
+
+    // efeitos colaterais, verifica o usuario(context), se tiver o token, ou seja, se a pessoa estiver logada, o usuario ira para a home
+    useEffect(() => {
+        if (usuario.token !== "") {
+            navigate('/home')
+        }
+    }, [usuario])
+
+    function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
+        setUsuarioLogin({
+            ...usuarioLogin,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    function login(e: FormEvent<HTMLFormElement>) {
+        //evita um carregamento da pagina
+        e.preventDefault()
+        //é a função que ta no context, ela vai enviar as requisiçoes para o back
+        handleLogin(usuarioLogin)
+    }
 
     return (
         <>
             <div className="grid grid-cols-1 lg:grid-cols-2 h-screen place-items-center font-bold ">
-                <form className="flex justify-center items-center flex-col w-1/2 gap-4" >
-                    <h2 className="text-violet-950 text-5xl ">Login</h2>
+                <form className="flex justify-center items-center flex-col w-1/2 gap-4" 
+                    onSubmit={login}>
+
+                    <h2 className="text-slate-900 text-5xl ">Entrar</h2>
                     <div className="flex flex-col w-full">
-                        <label htmlFor="usuario" className="px-3">Usuário</label>
+                        <label htmlFor="usuario">Usuário</label>
                         <input
                             type="text"
                             id="usuario"
                             name="usuario"
                             placeholder="Usuario"
-                            className="border-2 border-violet-950 rounded-3xl p-2 px-3"
-
+                            className="border-2 border-slate-700 rounded p-2"
+                            value = {usuarioLogin.usuario}
+                            //toda vez que que algo é digitado no form, o onChange captura, cada letra digitada
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
                         />
                     </div>
                     <div className="flex flex-col w-full">
-                        <label htmlFor="senha" className="px-3">Senha</label>
+                        <label htmlFor="senha">Senha</label>
                         <input
                             type="password"
                             id="senha"
                             name="senha"
                             placeholder="Senha"
-                            className="border-2 border-violet-950 rounded-3xl p-2 px-3"
-
+                            className="border-2 border-slate-700 rounded p-2"
+                            value = {usuarioLogin.senha}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
                         />
                     </div>
                     <button 
                         type='submit' 
-                        className="rounded-2xl bg-violet-300 text-violet-950 text-xl flex justify-center
-                                   hover:bg-indigo-900  w-1/2 py-2 hover:text-violet-200">
-                        <span>Entrar</span>
+                        className="rounded bg-indigo-400 flex justify-center
+                                   hover:bg-indigo-900 text-white w-1/2 py-2">
+                        { isLoading ? 
+                            <ClipLoader 
+                                color="#ffffff" 
+                                size={24}
+                            /> : 
+                            <span>Entrar</span>
+                        }
                     </button>
 
                     <hr className="border-slate-800 w-full" />
-
                    <p>
                         Ainda não tem uma conta?{' '}
+                        {/* para navegação direta */}
                         <Link to="/cadastro" className="text-indigo-800 hover:underline">
                             Cadastre-se
                         </Link>
@@ -52,5 +100,6 @@ function Login() {
         </>
     );
 }
+
 
 export default Login;
