@@ -16,7 +16,8 @@ function ModalPostagem() {
                 modal
                 contentStyle={{
                     borderRadius: '1rem',
-                    paddingBottom: '2rem'
+                    paddingBottom: '2rem',
+                    backgroundColor: '#370c7e'
                 }}
             >
                 <FormPostagem />

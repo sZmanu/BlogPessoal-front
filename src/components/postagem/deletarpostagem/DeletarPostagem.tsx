@@ -4,6 +4,7 @@ import { AuthContext } from "../../../contexts/AuthContextProps"
 import type Postagem from "../../../models/Postagem"
 import { buscar, deletar } from "../../../services/Service"
 import { ClipLoader } from "react-spinners"
+import { ToastAlerta } from "../../../utils/ToastAlerta"
 
 function DeletarPostagem() {
 
@@ -33,7 +34,7 @@ function DeletarPostagem() {
 
     useEffect(() => {
         if (token === '') {
-            alert('Você precisa estar logado')
+            ToastAlerta('Você precisa estar logado', 'info')
             navigate('/')
         }
     }, [token])
@@ -54,13 +55,13 @@ function DeletarPostagem() {
                 }
             })
 
-            alert('Postagem apagada com sucesso')
+             ToastAlerta('Postagem apagada com sucesso', 'sucesso')
 
         } catch (error: any) {
             if (error.toString().includes('401')) {
                 handleLogout()
             }else {
-                alert('Erro ao deletar a postagem.')
+                ToastAlerta('Erro ao deletar a postagem.', 'erro')
             }
         }
 
@@ -73,31 +74,33 @@ function DeletarPostagem() {
     }
     
     return (
-        <div className='container w-1/3 mx-auto'>
-            <h1 className='text-4xl text-center my-4'>Deletar Postagem</h1>
+        <div className="w-full bg-violet-950 flex">
+        <div className='container w-1/3 mx-auto mt-30'>
+            <h1 className='text-4xl text-center font-medium text-white'>Deletar Postagem</h1>
 
-            <p className='text-center font-semibold mb-4'>
+            <p className='text-center font-semibold text-gray-300 mb-8'>
                 Você tem certeza de que deseja apagar a postagem a seguir?
             </p>
 
-            <div className='border flex flex-col rounded-2xl overflow-hidden justify-between'>
+            <div className='flex flex-col rounded-2xl overflow-hidden justify-between bg-violet-50'>
                 <header 
-                    className='py-2 px-6 bg-indigo-600 text-white font-bold text-2xl'>
+                    className='py-2 text-center px-6 bg-violet-300 text-violet-800 font-bold text-2xl'>
                     Postagem
                 </header>
                 <div className="p-4">
-                    <p className='text-xl h-full'>{postagem.titulo}</p>
+                    <p className='text-lg font-bold text-center text-violet-900 mb-4 h-full'>{postagem.titulo}</p>
                     <p>{postagem.texto}</p>
                 </div>
-                <div className="flex">
+                <div className="flex gap-3 p-2 mb-3">
                     <button 
-                        className='text-slate-100 bg-red-400 hover:bg-red-600 w-full py-2'
+                        className='text-white font-semibold bg-red-400 rounded-3xl
+                    hover:bg-red-700 w-1/2 flex items-center justify-center'
                         onClick={retornar}>
                         Não
                     </button>
                     <button 
-                        className='w-full text-slate-100 bg-indigo-400 
-                        hover:bg-indigo-600 flex items-center justify-center'
+                        className='w-1/2 text-white font-semibold bg-violet-500 rounded-3xl
+                    hover:bg-violet-900 flex items-center justify-center py-2'
                         onClick={deletarPostagem}>
 
                         { isLoading ? 
@@ -111,6 +114,7 @@ function DeletarPostagem() {
                     </button>
                 </div>
             </div>
+        </div>
         </div>
     )
 }

@@ -5,6 +5,7 @@ import { AuthContext } from "../../../contexts/AuthContextProps";
 import type Postagem from "../../../models/Postagem";
 import type Tema from "../../../models/Tema";
 import { atualizar, buscar, cadastrar } from "../../../services/Service";
+import { ToastAlerta } from "../../../utils/ToastAlerta";
 
 function FormPostagem() {
 
@@ -23,6 +24,7 @@ function FormPostagem() {
 
     const { id } = useParams<{ id: string }>()
 
+    //atualização de postagem
     async function buscarPostagemPorId(id: string) {
         try {
             await buscar(`/postagens/${id}`, setPostagem, {
@@ -35,6 +37,7 @@ function FormPostagem() {
         }
     }
 
+    //atualização e cadastro de postagem
     async function buscarTemaPorId(id: string) {
         try {
             await buscar(`/temas/${id}`, setTema, {
@@ -47,6 +50,7 @@ function FormPostagem() {
         }
     }
 
+    //atualização e cadastro de postagem
     async function buscarTemas() {
         try {
             await buscar('/temas', setTemas, {
@@ -59,13 +63,16 @@ function FormPostagem() {
         }
     }
 
+    // se tentar acessar uma rota sem ter um login
     useEffect(() => {
         if (token === '') {
-            alert('Você precisa estar logado');
+            ToastAlerta('Você precisa estar logado', 'info');
             navigate('/');
         }
     }, [token])
 
+    // verifica se o parametro id existe, se o use params conseguiu encontrar um id
+    // ele carrega as informações da postagem no form
     useEffect(() => {
         buscarTemas()
 
@@ -76,15 +83,18 @@ function FormPostagem() {
 
     useEffect(() => {
         setPostagem({
-            ...postagem,
-            tema: tema,
+            ...postagem, // espalhando os campos do objt postagem
+            //titulo
+            // texto
+            tema: tema, // lado esquerdo é a propriedade, o outro é a variavel de estado
+            // ele verifica quando o tema foi trocado e atualiza o valor da propriedade
         })
     }, [tema])
 
     function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
-        setPostagem({
-            ...postagem,
-            [e.target.name]: e.target.value,
+        setPostagem({ // chama setpostagem para atualizar a postagem
+            ...postagem, //espalha as informações
+            [e.target.name]: e.target.value, //pega as informações digitadas 
             tema: tema,
             usuario: usuario,
         });
@@ -106,13 +116,13 @@ function FormPostagem() {
                     },
                 });
 
-                alert('Postagem atualizada com sucesso')
+                ToastAlerta('Postagem atualizada com sucesso', 'sucesso')
 
             } catch (error: any) {
                 if (error.toString().includes('401')) {
                     handleLogout()
                 } else {
-                    alert('Erro ao atualizar a Postagem')
+                    ToastAlerta('Erro ao atualizar a Postagem', 'erro')
                 }
             }
 
@@ -124,13 +134,13 @@ function FormPostagem() {
                     },
                 })
 
-                alert('Postagem cadastrada com sucesso');
+                ToastAlerta('Postagem cadastrada com sucesso', 'sucesso');
 
             } catch (error: any) {
                 if (error.toString().includes('401')) {
                     handleLogout()
                 } else {
-                    alert('Erro ao cadastrar a Postagem');
+                    ToastAlerta('Erro ao cadastrar a Postagem', 'erro');
                 }
             }
         }
@@ -139,44 +149,46 @@ function FormPostagem() {
         retornar()
     }
 
+    // ele verifica se o tema foi selecionado, se não foi selecionado ele armazena true
     const carregandoTema = tema.descricao === '';
 
 
     return (
-        <div className="container flex flex-col mx-auto items-center">
-            <h1 className="text-4xl text-center my-8">
+        <div className="w-full h-screen bg-violet-950 flex justify-center items-center">
+        <div className="container flex flex-col w-1/2 items-center bg-violet-50 rounded-3xl p-13 shadow-violet-300">
+            <h1 className="text-violet-900 text-4xl text-center my-8 font-medium">
                  {id !== undefined ? 'Editar Postagem' : 'Cadastrar Postagem'}
             </h1>
 
-            <form className="flex flex-col w-1/2 gap-4"
+            <form className="flex flex-col w-full gap-4"
                 onSubmit={gerarNovaPostagem}>
                 <div className="flex flex-col gap-2">
-                    <label htmlFor="titulo">Título da Postagem</label>
+                    <label htmlFor="titulo" className="ml-3 mt-1 font-medium">Título da Postagem</label>
                     <input
                         type="text"
                         placeholder="Titulo"
                         name="titulo"
                         required
-                        className="border-2 border-slate-700 rounded p-2"
+                        className="border-2 border-violet-950 rounded-4xl p-2 pl-3 focus:outline-violet-700"
                         value={postagem.titulo}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
                     />
                 </div>
                 <div className="flex flex-col gap-2">
-                    <label htmlFor="titulo">Texto da Postagem</label>
+                    <label htmlFor="titulo" className="ml-3 mt-1 font-medium">Texto da Postagem</label>
                     <input
                         type="text"
                         placeholder="Texto"
                         name="texto"
                         required
-                        className="border-2 border-slate-700 rounded p-2"
+                        className="border-2 border-violet-950 rounded-4xl p-2 pl-3 focus:outline-violet-700"
                          value={postagem.texto}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
                     />
                 </div>
                 <div className="flex flex-col gap-2">
-                    <p>Tema da Postagem</p>
-                    <select name="tema" id="tema" className='border p-2 border-slate-800 rounded' 
+                    <p className="ml-3 mt-1 font-medium">Tema da Postagem</p>
+                    <select name="tema" id="tema" className='border-2 border-violet-950 rounded-4xl p-2 pl-3 focus:outline-violet-700' 
                         onChange={(e) => buscarTemaPorId(e.currentTarget.value)}
                     >
                         <option value="" selected disabled>Selecione um Tema</option>
@@ -191,8 +203,9 @@ function FormPostagem() {
                 </div>
                 <button 
                     type='submit' 
-                    className='rounded disabled:bg-slate-200 bg-indigo-400 hover:bg-indigo-800
-                               text-white font-bold w-1/2 mx-auto py-2 flex justify-center'
+                    className=' disabled:bg-slate-200 bg-violet-400 rounded-3xl hover:bg-violet-900
+                               text-white font-bold w-1/2 mx-auto py-2 flex justify-center mt-4 '
+                               // ele desabilita o botao caso o tema esteja carregando ou nao tenha sido selecionado
                                disabled={carregandoTema}
                 >
                     { isLoading ? 
@@ -205,6 +218,7 @@ function FormPostagem() {
 
                 </button>
             </form>
+        </div>
         </div>
     );
 }
