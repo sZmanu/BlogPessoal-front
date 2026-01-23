@@ -43,12 +43,12 @@ function Login() {
         <>
             <div className="grid grid-cols-1 lg:grid-cols-2 h-screen place-items-center font-bold">
                 <div className="bg-violet-50 rounded-br-4xl rounded-tr-4xl w-full min-h-screen flex justify-center ">
-                <form className="flex justify-center items-center flex-col w-7/10 gap-6" 
+                <form className="flex justify-center items-center flex-col sm:w-7/10 w-full p-5 gap-6" 
                     onSubmit={login}>
 
                     <div className="flex flex-col w-full items-center">
                     <h2 className="text-violet-900 text-5xl ">Login</h2>
-                    <h3 className="mt-5 text-neutral-500 font-medium">Entre com seu email e senha para acessar a sua conta</h3>
+                    <h3 className="mt-5 text-neutral-500 font-medium text-center">Entre com seu email e senha para acessar a sua conta</h3>
                     <div className="flex flex-col w-full">
                         <label htmlFor="usuario" className="ml-3 mt-4">Usuário</label>
                         <input
@@ -88,7 +88,7 @@ function Login() {
                     </button>
                         </div>
                     
-                   <p className="mt-7">
+                   <p className="mt-7 text-center">
                         Ainda não tem uma conta?{' '}
                         {/* para navegação direta */}
                         <Link to="/cadastro" className="text-violet-800 hover:underline">

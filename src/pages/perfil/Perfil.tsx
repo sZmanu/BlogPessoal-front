@@ -33,7 +33,7 @@ function Perfil() {
 
 				<div
 					className="relative mt-[-6rem] h-72 flex flex-col 
-                    bg-violet-900 text-white text-2xl items-center justify-center"
+                    bg-violet-900 text-white text-1xl sm:text-2xl items-center justify-center"
 				>
 					<p><span className="text-violet-300 font-medium">Nome:</span> {usuario.nome} </p>
 					<p><span className="text-violet-300 font-medium">Email:</span> {usuario.usuario}</p>
