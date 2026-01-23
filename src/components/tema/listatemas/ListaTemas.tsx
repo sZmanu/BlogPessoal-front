@@ -58,7 +58,7 @@ function ListaTemas() {
                 </div>
             )}
 
-            <div className="flex justify-center w-full pt-30">
+            <div className="flex justify-center w-full pt-10 p-5">
                 <div className="container flex flex-col">
 
                     {(!isLoading && temas.length === 0) && (

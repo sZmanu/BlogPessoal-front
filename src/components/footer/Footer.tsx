@@ -16,7 +16,7 @@ function Footer() {
             component = ( 
             <div className="flex justify-center bg-violet-300 text-white pt-5">
                 <div className="container flex flex-col items-center py-4">
-                    <p className='text-xl font-bold'>
+                    <p className='text-xl font-bold text-center'>
                             Blog Pessoal Manuella Oliveira | Copyright: {data}
                         </p>
                     <p className='text-lg'>Acesse minhas redes sociais</p>

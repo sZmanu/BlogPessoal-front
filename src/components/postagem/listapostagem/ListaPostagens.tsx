@@ -58,7 +58,7 @@ function ListaPostagens() {
                 </div>
             )}
 
-            <div className="flex justify-center w-full pt-30 bg-violet-950">
+            <div className="flex justify-center w-full p-5  bg-violet-950 pt-10">
                 <div className="container flex flex-col">
 
                     {(!isLoading && postagens.length === 0) && (

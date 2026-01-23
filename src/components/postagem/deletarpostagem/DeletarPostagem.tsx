@@ -74,8 +74,8 @@ function DeletarPostagem() {
     }
     
     return (
-        <div className="w-full bg-violet-950 flex">
-        <div className='container w-1/3 mx-auto mt-30'>
+        <div className="w-full bg-violet-950 flex p-5">
+        <div className='container md:w-1/3 w-full mx-auto mt-30'>
             <h1 className='text-4xl text-center font-medium text-white'>Deletar Postagem</h1>
 
             <p className='text-center font-semibold text-gray-300 mb-8'>

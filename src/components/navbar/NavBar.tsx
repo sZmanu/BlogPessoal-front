@@ -24,10 +24,10 @@ function Navbar() {
             <div className='w-full flex justify-center py-4
             			   bg-violet-950 text-white'>
             
-                <div className="container flex justify-between text-lg mx-8 flex-wrap">
-                    <Link to='/home' className="text-2xl font-bold text-violet-300">Blog Pessoal</Link>
+                <div className="container flex justify-between mx-8 flex-wrap">
+                    <Link to='/home' className="text-2xl font-bold sm:text-4xl text-violet-300">Blog Pessoal</Link>
 
-                    <div className='flex gap-5 min-w-11 '>
+                    <div className='flex gap-2 min-w-11 md:gap-5 sm:text-lg'>
                         <Link to='/postagens' className='text-violet-200 hover:text-violet-500 font-medium'>Postagens</Link>
                         <Link to='/temas' className='text-violet-200 font-medium hover:text-violet-500'>Temas</Link>
                         <Link to='/cadastrartema' className='text-violet-200 font-medium hover:text-violet-500'>Cadastrar tema</Link>
