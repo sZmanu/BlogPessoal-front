@@ -4,7 +4,7 @@ import ModalPostagem from "../../components/postagem/modalpostagem/ModalPostagem
 function Home() {
     return (
         <>
-        <div className="w-full h-screen bg-violet-950">
+        <div className="w-full bg-violet-950">
             <div className="bg-violet-950 flex justify-center p-5">
                 <div className='container grid grid-cols-1 sm:grid-cols-2 text-white'>
                     <div className="flex flex-col gap-4 items-center justify-center py-4 w-full">

@@ -17,7 +17,7 @@ function Perfil() {
 	}, [usuario.token])
 
 	return (
-		<div className="flex justify-center mx-4 pt-20">
+		<div className="flex justify-center mx-4 pt-20 w-full">
 			<div className="container mx-auto my-4 rounded-2xl overflow-hidden">
 				<img
 					className="w-full h-72 object-cover border-b-8 border-white"
@@ -33,7 +33,7 @@ function Perfil() {
 
 				<div
 					className="relative mt-[-6rem] h-72 flex flex-col 
-                    bg-violet-900 text-white text-1xl sm:text-2xl items-center justify-center"
+                    bg-violet-900 text-white text-1xl sm:text-2xl items-center justify-center rounded-2xl"
 				>
 					<p><span className="text-violet-300 font-medium">Nome:</span> {usuario.nome} </p>
 					<p><span className="text-violet-300 font-medium">Email:</span> {usuario.usuario}</p>
